@@ -188,7 +188,11 @@ class EventEmitter(DaemonThread):
   def run(self):
     try:
       while self.should_keep_running():
-        self.queue_events(self.timeout)
+        try:
+          self.queue_events(self.timeout)
+        except OSError, e:
+          if e.errno != errno.EINTR:
+            raise
     finally:
       self.on_thread_exit()
 
@@ -247,6 +251,9 @@ class EventDispatcher(DaemonThread):
       while self.should_keep_running():
         try:
           self.dispatch_events(self.event_queue, self.timeout)
+        except OSError, e:
+          if e.errno != errno.EINTR:
+            raise
         except queue.Empty:
           continue
     finally:
