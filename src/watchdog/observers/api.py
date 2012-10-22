@@ -51,6 +51,7 @@ Classes
 
 from __future__ import with_statement
 import threading
+import errno
 
 try:
   import queue # IGNORE:F0401
