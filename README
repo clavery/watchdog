@@ -2,6 +2,7 @@ Watchdog
 ========
 Python API and shell utilities to monitor file system events.
 
+clavery fork changes: essentially ignore EINTR during watch to avoid crashing on linux systems when backgrounded.
 
 Example API Usage
 -----------------
